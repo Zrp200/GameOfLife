@@ -12,7 +12,9 @@ public class GUIController {
 		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				MainForm f = new MainForm();
+				initialize(new MainForm());
+			}
+			private void initialize(MainForm f) {
 				f.setSize(600,600);
 				f.setLocationRelativeTo(null);
 				f.setVisible(true);

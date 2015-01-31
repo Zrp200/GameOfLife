@@ -1,15 +1,19 @@
 import java.awt.CardLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
+/**
+ * <h1>Mainform Object</h1>
+ * Creates the main program window and controls
+ * overall flow of the program.
+ * 
+ * @author <a href="mailto:dave@mrmanton.com">Dave Manton</a>
+ * @see <a href="https://github.com/davemanton/GameOfLife">GitHub Project Repository</a>
+ */
 public class MainForm extends JFrame {
 
 	//Main Screen Elements
@@ -26,13 +30,12 @@ public class MainForm extends JFrame {
 	
 	//Second Screen Elements
 	private WorldScreen worldScreen;
-	private JButton restart;
+	private JButton restart;	
 	
-	
-	
-	private ClickableCell[][] test;
-	
-	
+	//Constructor
+	/**
+	 * Constructor for main program window
+	 */
 	public MainForm() {
 		super("Conway's Game of Life");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,8 +64,11 @@ public class MainForm extends JFrame {
 		
 	}
 	
+	//Starts second screen to allow set up of the world
 	private void startWorldSetup() {
+		//Checks input is valid
 		if(firstScreen.validateInput()) {
+			//Creates button for set up screen and creates action
 			createWorld = new JButton("Create World");
 			createWorld.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -70,13 +76,16 @@ public class MainForm extends JFrame {
 				}
 			});
 			
+			//Creates second screen and adds to program
 			setupWorldScreen = new SetupScreen(firstScreen.getRows(), firstScreen.getColumns(), createWorld);
 			mainContainer.add(setupWorldScreen, "secondScreen");
 			mainWindow.show(mainContainer, "secondScreen");
 		}
-	}
+	}//end startWorldSetup method
 	
+	//Creates world for start of game
 	private void createWorld() {
+		//Creates button for returning to beginning of setuo
 		restart = new JButton("New World");
 		restart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -85,20 +94,19 @@ public class MainForm extends JFrame {
 		});
 		worldScreen = new WorldScreen(firstScreen.getRows(), firstScreen.getColumns(), restart);
 		
-		
-		
+		//Set up game world based on input
 		boolean[][] setupState = setupWorldScreen.getSetupState();
-		
 		worldScreen.setupWorld(setupState);
 		
+		//Add new screen for game world
 		mainContainer.add(worldScreen, "thirdScreen");
 		mainWindow.show(mainContainer, "thirdScreen");
-	}
 	
+	}//end createWorld method
+	
+	//Allows return to the beginning of set up.
 	private void restartScreens() {
 		mainWindow.show(mainContainer, "firstScreen");
-	}
+	}//end restartScreens method	
 	
-	
-	
-}
+}//end MainForm class
